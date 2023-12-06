@@ -1,0 +1,10 @@
+[Unit]
+Description=xAutoLock
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=/bin/xautolock -time 5 -locker "i3lock --nofork -t -i /usr/share/pixmaps/lock.png" -detectsleep -corners ----
+
+[Install]
+WantedBy=graphical.target

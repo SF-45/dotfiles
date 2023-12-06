@@ -1,0 +1,17 @@
+/home/sf/.config/ext-config/modprobe.d/hid_apple.conf /etc/modprobe.d/hid_apple.conf copy
+
+/home/sf/.config/ext-config/systemd/logind.conf /etc/systemd/logind.conf copy
+/home/sf/.config/ext-config/systemd/sleep.conf /etc/systemd/sleep.conf copy
+
+/home/sf/.config/ext-config/acpid/dell-laptop.sh /etc/acpi/handler.sh copy
+
+/home/sf/.config/ext-config/ntp/ntp.conf /etc/ntp.conf copy
+
+
+/home/sf/.config/ext-config/lightdm/lightdm.conf /etc/lightdm/lightdm.conf copy
+/home/sf/.config/ext-config/lightdm/slick-greeter.conf /etc/lightdm/slick-greeter.conf copy
+
+/home/sf/.config/ext-config/xorg/xorg.conf.d/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf copy
+/home/sf/.config/ext-config/xorg/xorg.conf.d/40-libinput.conf /etc/X11/xorg.conf.d/40-libinput.conf copy
+#/home/sf/.config/ext-config/xorg/xorg.conf.d/70-synaptics.conf /etc/X11/xorg.conf.d/70-synaptics.conf copy
+

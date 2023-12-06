@@ -1,0 +1,7 @@
+[user]
+	name = SF-45
+	email = akcaynt1@gmail.com
+[core]
+	editor = nvim
+[commit]
+	gpgSign = false

@@ -1,0 +1,22 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "normal",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 322,
+       "width": 822,
+       "x": 0,
+       "y": 0
+    },
+    "marks": [],
+    "name": "HomeWin",
+    "percent": 1,
+    "swallows": [
+       {
+       "title": "^HomeWin$"
+       }
+    ],
+    "type": "con"
+}
+

@@ -1,0 +1,53 @@
+// vim:ts=4:sw=4:et
+{
+    // tabbed split container with 2 children
+    "border": "normal",
+    "floating": "auto_off",
+    "layout": "tabbed",
+    "marks": [],
+    "percent": null,
+    "type": "con",
+    "nodes": [
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1014,
+               "width": 1916,
+               "x": 4,
+               "y": 66
+            },
+            "marks": [],
+            "name": "Cheeze — Mozilla Firefox",
+            "percent": 0.5,
+            "swallows": [
+               {
+               "class": "^firefox$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "normal",
+            "current_border_width": 2,
+            "floating": "auto_off",
+            "geometry": {
+               "height": 1014,
+               "width": 1916,
+               "x": 0,
+               "y": 0
+            },
+            "marks": [],
+            "name": "Work — Mozilla Firefox",
+            "percent": 0.5,
+            "swallows": [
+               {
+                "class": "^firefox$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+

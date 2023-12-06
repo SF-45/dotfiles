@@ -1,0 +1,14 @@
+#!/bin/sh
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+export PATH="${PATH}:/home/sf/bin"
+export EDITOR="nvim"
+#export GTK_OVERLAY_SCROLLING=0 #Нужно для работы Eclipse
+
+#export QT_AUTO_SCREEN_SCALE_FACTOR=1
+#export GDK_SCALE=2
+#export GDK_DPI_SCALE=0.5
+
+#setxkbmap -model pc105 -layout us,ru -variant , -option grp:caps_toggle -option terminate:ctrl_alt_bksp &
+dbus-update-activation-environment --all &
+ssh-agent &
+numlockx &

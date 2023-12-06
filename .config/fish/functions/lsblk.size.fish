@@ -1,0 +1,4 @@
+function lsblk.size --wraps='lsblk -o NAME,FSTYPE,FSVER,LABEL,UUID,FSAVAIL,FSUSED,MOUNTPOINTS' --description 'alias lsblk.size=lsblk -o NAME,FSTYPE,FSVER,LABEL,UUID,FSAVAIL,FSUSED,MOUNTPOINTS'
+  lsblk -o NAME,FSTYPE,FSVER,LABEL,UUID,FSAVAIL,FSUSED,MOUNTPOINTS $argv
+        
+end

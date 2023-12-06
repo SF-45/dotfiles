@@ -1,0 +1,15 @@
+/*
+!.gitignore
+
+!alacritty/
+!dunst/
+!ext-config/
+!fontconfig/
+!i3/
+!nvim/
+!polybar/
+!fish/
+!ranger/
+!systemd/
+systemd/user/default.target.wants
+!tmux/
