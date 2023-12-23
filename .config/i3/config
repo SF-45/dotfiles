@@ -16,7 +16,7 @@ smart_borders on
 
 #font Hack 10
 font pango:Noto Sans Medium 10
-for_window [all] title_window_icon no
+for_window [all] title_window_icon yes
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 # exec --no-startup-id dex --autostart --environment i3

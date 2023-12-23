@@ -293,7 +293,7 @@ handle_mime() {
             exit 1;;
 
         ## Text
-        text/* | */xml)
+        text/* | */xml | application/javascript)
             ## Syntax highlight
             if [[ "$( stat --printf='%s' -- "${FILE_PATH}" )" -gt "${HIGHLIGHT_SIZE_MAX}" ]]; then
                 exit 2
@@ -310,8 +310,11 @@ handle_mime() {
                 --force -- "${FILE_PATH}" && exit 5
             env COLORTERM=8bit bat --color=always --style="plain" \
                 -- "${FILE_PATH}" && exit 5
-            pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
-                -- "${FILE_PATH}" && exit 5
+            #pygmentize -f "${pygmentize_format}" -O "style=${PYGMENTIZE_STYLE}"\
+            #    -- "${FILE_PATH}" && exit 5
+            
+            highlight --replace-tabs="${HIGHLIGHT_TABWIDTH}" --out-format="${highlight_format}" \
+                --style="${HIGHLIGHT_STYLE}" --force -- "${FILE_PATH}" && exit 5
             exit 2;;
 
         ## DjVu
