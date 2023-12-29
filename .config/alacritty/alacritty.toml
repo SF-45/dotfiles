@@ -1,0 +1,11 @@
+import = ["/home/sf/.config/alacritty/themes/alacritty-theme/themes/nord.toml"]
+
+[env]
+WINIT_X11_SCALE_FACTOR = "1"
+
+[font]
+size = 11
+
+[font.normal]
+family = "Hack"
+style = "Bold"
