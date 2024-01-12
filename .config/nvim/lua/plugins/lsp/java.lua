@@ -1,11 +1,13 @@
 local home = os.getenv("HOME")
 local jdtls = require("jdtls")
-local root_markers = { "gradlew", "mvnw", ".git", "pom.xml" }
-local root_dir = require("jdtls.setup").find_root(root_markers)
-local workspace_folder = home .. "/dev/java" .. vim.fn.fnamemodify(root_dir, ":p:h:t")
+-- local root_markers = { "gradlew", "mvnw", ".git", "pom.xml" }
+local root_markers = { "gradlew", "mvnw" }
+local root_dir = jdtls.setup.find_root(root_markers)
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local workspace_dir = home .. "/dev/java/" .. project_name
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
+local mason_share = home .. "/.local/share/nvim/mason/share"
+
 local on_attach = function(_, bufnr)
   jdtls.setup_dap({ hotcodereplace = "auto" })
 
@@ -16,13 +18,26 @@ local on_attach = function(_, bufnr)
   map("n", "<leader>cT", jdtls.test_nearest_method, "Test method (DAP) <Java>", opts)
   map("n", "<leader>cev", jdtls.extract_variable, "Extract variable <Java>", opts)
   map("n", "<leader>cec", jdtls.extract_constant, "Extract constant <Java>", opts)
-  map("v", "<leader>cem", jdtls.extract_method({true}), "Extract method <Java>", opts)
+  map("v", "<leader>cem", function() jdtls.extract_method({ true }) end, "Extract method <Java>", opts)
+
+  if (project_name == "owlook-project") then
+    map("n", "<leader>cRr", ":!./owlook.sh<CR>", "Run Owlook App <Owlook>", opts)
+  end
+
+  vim.cmd [[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>) ]]
+  vim.cmd [[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>) ]]
+  vim.cmd [[ command! -buffer JdtUpdateConfig lua require('jdtls').update_project_config() ]]
+  vim.cmd [[ command! -buffer JdtBytecode lua require('jdtls').javap() ]]
+  vim.cmd [[ command! -buffer JdtJol lua require('jdtls').jol() ]]
+  vim.cmd [[ command! -buffer JdtJshell lua require('jdtls').jshell() ]]
 end
 
 local bundles = {
-  vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adaptercom.microsoft.java.debug.plugin-*.jar"),
+  mason_share .. "/java-debug-adapter/com.microsoft.java.debug.plugin.jar",
+  vim.fn.glob(mason_share .. "/java_test/*.jar"),
 }
-vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar"), "\n"))
+
+-- vim.list_extend(bundles, vim.split(vim.fn.glob(mason_share .. "/java_test/*.jar", true), "\n"))
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
@@ -39,12 +54,13 @@ local config = {
   root_dir = root_dir,
   settings = {
     java = {
-      -- format = {
-      -- 	settings = {
-      -- 		url = "/.local/share/eclipse/eclipse-java-google-style.xml",
-      -- 		profile = "GoogleStyle",
-      -- 	},
-      -- },
+      format = {
+        settings = {
+          url = home .. "/.config/nvim/eclipse-java-google-style.xml",
+          profile = "GoogleStyle",
+        },
+      },
+      extendedClientCapabilities = jdtls.extendedClientCapabilities,
       signatureHelp = { enabled = true },
       contentProvider = { preferred = "fernflower" },
       completion = {
@@ -65,6 +81,17 @@ local config = {
           "sun.*",
         },
       },
+      compile = {
+        nullAnalysis = {
+          nonnull = {
+            "lombok.NonNull",
+            "javax.annotation.Nonnull",
+            "org.eclipse.jdt.annotation.NonNull",
+            "org.springframework.lang.NonNull",
+          },
+        },
+      },
+      maven = { downloadSources = true },
       sources = {
         organizeImports = {
           starThreshold = 9999,
@@ -83,6 +110,10 @@ local config = {
       configuration = {
         runtimes = {
           {
+            name = "JavaSE-1.8",
+            path = "/usr/lib/jvm/java-8-openjdk",
+          },
+          {
             name = "JavaSE-11",
             path = "/usr/lib/jvm/java-11-openjdk",
           },
@@ -94,28 +125,38 @@ local config = {
       },
     },
   },
-  cmd = { "jdtls", workspace_folder },
+  --cmd = { "jdtls", workspace_folder },
   -- cmd = {
-  -- 	"/usr/lib/jvm/java-21-openjdk/bin/java",
-  -- 	"-Declipse.application=org.eclipse.jdt.ls.core.id1",
-  -- 	"-Dosgi.bundles.defaultStartLevel=4",
-  -- 	"-Declipse.product=org.eclipse.jdt.ls.core.product",
-  -- 	"-Dlog.protocol=true",
-  -- 	"-Dlog.level=ALL",
-  -- 	"-Xmx4g",
-  -- 	"--add-modules=ALL-SYSTEM",
-  -- 	"--add-opens",
-  -- 	"java.base/java.util=ALL-UNNAMED",
-  -- 	"--add-opens",
-  -- 	"java.base/java.lang=ALL-UNNAMED",
-  -- 	"-javaagent:" .. home .. "/.local/share/nvim/mason/packages/jdtls/lombok.jar",
-  -- 	"-jar",
-  -- 	vim.fn.glob(home .. "/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_*.jar"),
-  -- 	"-configuration",
-  -- 	home .. "/.local/share/nvim/mason/packages/jdtls/config_linux/config.ini",
-  -- 	"-data",
-  -- 	workspace_folder,
+  --   "jdtls",
+  --   "-data",
+  --   workspace_dir,
+  --   "--jvm-arg=-XX:+UseParallelGC",
+  --   "--jvm-arg=-XX:GCTimeRatio=4",
+  --   "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
+  --   "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
+  --   "--jvm-arg=-Xmx1500m",
+  --   "--jvm-arg=-Xms700m",
+  --   "--jvm-arg=-Xlog:disable",
+  --   "--jvm-arg=-javaagent:"
+  --   .. get_install_path_for "jdtls"
+  --   .. "/lombok.jar",
   -- },
+  cmd = {
+    "jdtls",
+    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+    "-Dosgi.bundles.defaultStartLevel=4",
+    "-Declipse.product=org.eclipse.jdt.ls.core.product",
+    "-Dlog.protocol=true",
+    "-Dlog.level=ALL",
+    "-Xmx1g",
+    "--add-modules=ALL-SYSTEM",
+    "--add-opens", "java.base/java.util=ALL-UNNAMED",
+    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+    "-jar", mason_share .. "/jdtls/plugins/org.eclipse.equinox.launcher.jar",
+    "-configuration", mason_share .. "/jdtls/config",
+    "--jvm-arg=-javaagent:" .. mason_share .. "/jdtls/lombok.jar",
+    "-data", workspace_dir
+  },
 }
 
 local M = {}

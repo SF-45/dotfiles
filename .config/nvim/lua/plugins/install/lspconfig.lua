@@ -56,6 +56,7 @@ return {
     },
   },
   config = function()
+    setup_generic()
     setup_lua()
   end,
 }

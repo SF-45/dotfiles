@@ -1,7 +1,10 @@
 --=================================================================================================
---Что-то
---https://github.com/nvim-lua/plenary.nvim
+--Комментирование кода
+--https://github.com/numToStr/Comment.nvim
 --=================================================================================================
 return {
-  "nvim-lua/plenary.nvim",
+        "numToStr/Comment.nvim",
+        config = function()
+            require("Comment").setup()
+        end,
 }

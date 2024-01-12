@@ -19,6 +19,7 @@ autocmd("FileType", {
 		"checkhealth",
 		"neotest-summary",
 		"neotest-output-panel",
+    "TelescopePromptPrefix",
 	},
 	callback = function(event)
 		vim.bo[event.buf].buflisted = false
@@ -33,6 +34,8 @@ autocmd("LspAttach", {
     vim.bo[event.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
     local opts = { buffer = event.buf }
     map("n", "<leader>cd", vim.diagnostic.open_float, "Line Diagnostics <LSP>", opts)
+    map("n", "]d", vim.diagnostic.goto_next, "Next diagnostics <LSP>", opts)
+    map("n", "[d", vim.diagnostic.goto_prev, "Previous diagnostics <LSP>", opts)
     map("n", "gD", vim.lsp.buf.declaration, "Goto Declaration <LSP>", opts)
     map("n", "gd", vim.lsp.buf.definition, "Goto Definition <LSP>", opts)
     map("n", "K", vim.lsp.buf.hover, "Hover <LSP>", opts)

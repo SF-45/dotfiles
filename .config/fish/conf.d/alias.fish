@@ -23,3 +23,5 @@ alias suspend.disable 'systemctl mask --runtime suspend.target'
 alias suspend.enable 'systemctl unmask --runtime suspend.target'
 alias tm 'tmux a || tmux'
 alias xpropi3 'xprop | grep -e WM_CLASS -e WM_NAME'
+
+alias testnvim 'export XDG_CONFIG_HOME=/home/sf/Desktop/example_configs/'

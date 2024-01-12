@@ -1,7 +1,8 @@
 --=================================================================================================
---Что-то
---https://github.com/nvim-lua/plenary.nvim
+--https://github.com/folke/tokyonight.nvim
 --=================================================================================================
 return {
-  "nvim-lua/plenary.nvim",
+  "folke/tokyonight.nvim",
+  lazy = true,
+  opts = { style = "moon" },
 }

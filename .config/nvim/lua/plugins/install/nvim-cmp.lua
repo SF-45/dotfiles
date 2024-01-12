@@ -4,15 +4,12 @@
 --=================================================================================================
 local function config()
   local cmp = require("cmp")
+  local lspkind = require "lspkind"
 
   cmp.setup({
     snippet = {
-      -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
         require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
     },
     window = {
@@ -40,14 +37,30 @@ local function config()
         end
       end, { "i", "s" }),
     }),
+-- Разобраться с этим
+--    formatting = {
+--     format = lspkind.cmp_format {
+--       mode = "text",
+--       maxwidth = 50,
+--       ellipsis_char = "...",
+--       menu = {
+--         nvim_lsp = "[lsp]",
+--         ["vim-dadbod-completion"] = "[db]",
+--         nvim_lsp_signature_help = "[signature]",
+--         luasnip = "[snippet]",
+--         buffer = "[buffer]",
+--         conventionalcommits = "[commit]",
+--         git = "[git]",
+--         path = "[path]",
+--         obs = "[notes]",
+--       },
+--     },
+--   },
     sources = cmp.config.sources({
       { name = "nvim_lsp" },
-      -- { name = 'vsnip' }, -- For vsnip users.
-      { name = "luasnip" }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, {
+      { name = "luasnip" },
       { name = "buffer" },
+      { name = "path" },
       { name = "nvim_lsp_signature_help" },
     }),
   })
@@ -84,7 +97,11 @@ end
 return {
   "hrsh7th/nvim-cmp",
   dependencies = {
+    "onsails/lspkind.nvim",
+    "L3MON4D3/LuaSnip",
+
     "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp-signature-help",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",

@@ -1,7 +1,7 @@
 --=================================================================================================
---Что-то
---https://github.com/nvim-lua/plenary.nvim
+--Иконки
+--https://github.com/nvim-tree/nvim-web-devicons
 --=================================================================================================
 return {
-  "nvim-lua/plenary.nvim",
+  "nvim-tree/nvim-web-devicons"
 }

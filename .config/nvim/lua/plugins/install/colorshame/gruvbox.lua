@@ -1,7 +1,7 @@
 --=================================================================================================
---Что-то
---https://github.com/nvim-lua/plenary.nvim
+--https://github.com/ellisonleao/gruvbox.nvim
 --=================================================================================================
 return {
-  "nvim-lua/plenary.nvim",
+  "ellisonleao/gruvbox.nvim",
+  lazy = true,
 }

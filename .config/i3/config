@@ -16,7 +16,10 @@ smart_borders on
 
 #font Hack 10
 font pango:Noto Sans Medium 10
+
+# Title icons
 for_window [all] title_window_icon yes
+
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 # exec --no-startup-id dex --autostart --environment i3
@@ -25,6 +28,8 @@ for_window [all] title_window_icon yes
 # screen before suspend. Use loginctl lock-session to lock your screen.
 #exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
+# Switch to browser when a link is clicked
+focus_on_window_activation focus
 
 #======================================================================================================
 # Save Layout Load
@@ -68,7 +73,7 @@ exec --no-startup-id xss-lock -- $LOCKER
 
 exec --no-startup-id autorandr -c --default default
 #exec --no-startup-id feh --bg-scale $HOME/wallpapers/wp.png
-exec --no-startup-id "sh -c 'sleep 5; exec feh --bg-scale $HOME/wallpapers/wp.png'"
+exec --no-startup-id "sh -c 'sleep 5; exec feh --bg-scale ~/.config/i3/wp.*'"
 #======================================================================================================
 # Autostart
 #======================================================================================================
@@ -102,11 +107,11 @@ bindsym $mod+Shift+p exec --no-startup-id gnome-calculator
 bindsym $mod+q kill
 
 # lockscreen
-bindsym $mod+l exec $LOCKER
+bindsym $mod+Escape exec $LOCKER
 #bindsym $mod+l exec i3lock --nofork -t -i /usr/share/pixmaps/lock.png
 
 # suspend
-bindsym $mod+Shift+l exec systemctl suspend
+bindsym $mod+Shift+Escape exec systemctl suspend
 
 # split in horizontal orientation
 bindsym $mod+b split h
@@ -152,8 +157,12 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+#bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 20 # increase screen brightness
+#bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 20 # decrease screen brightness
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl -q set 10%+ # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl -q set 10%- # decrease screen brightness
+
 
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
@@ -165,10 +174,10 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 #---------------------------------------------------
 
 # change focus
-#bindsym $mod+h focus left
-#bindsym $mod+j focus down
-#bindsym $mod+k focus up
-#bindsym $mod+l focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -177,10 +186,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-#bindsym $mod+Shift+h move left
-#bindsym $mod+Shift+j move down
-#bindsym $mod+Shift+k move up
-#bindsym $mod+Shift+l move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -291,7 +300,51 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20"
 
+mode "workspaces" {
+
+# switch to workspace
+        bindsym 1 workspace number $ws11
+        bindsym 2 workspace number $ws12
+        bindsym 3 workspace number $ws13
+        bindsym 4 workspace number $ws14
+        bindsym 5 workspace number $ws15
+        bindsym 6 workspace number $ws16
+        bindsym 7 workspace number $ws17
+        bindsym 8 workspace number $ws18
+        bindsym 9 workspace number $ws19
+        bindsym 0 workspace number $ws20
+
+# move focused container to workspace
+        bindsym Shift+1 move container to workspace number $ws11
+        bindsym Shift+2 move container to workspace number $ws12
+        bindsym Shift+3 move container to workspace number $ws13
+        bindsym Shift+4 move container to workspace number $ws14
+        bindsym Shift+5 move container to workspace number $ws15
+        bindsym Shift+6 move container to workspace number $ws16
+        bindsym Shift+7 move container to workspace number $ws17
+        bindsym Shift+8 move container to workspace number $ws18
+        bindsym Shift+9 move container to workspace number $ws19
+        bindsym Shift+0 move container to workspace number $ws20
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+w mode "default"
+        bindsym $mod+Shift+w mode "default"
+}
+
+bindsym $mod+Shift+w mode "workspaces"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

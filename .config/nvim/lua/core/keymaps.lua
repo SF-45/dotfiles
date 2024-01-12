@@ -16,7 +16,7 @@ local opts = { noremap = true }
 local copyTable = require("util").copyTable
 
 -- highlights under cursor
-map("n", "<leader>ui", vim.show_pos, { desc = "Inspect Pos" })
+map("n", "<leader>ui", vim.show_pos, "Inspect Pos")
 
 ----------------------------------------------------------------------------------
 -- Window
@@ -46,6 +46,16 @@ map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", "Increase window width")
 ----------------------------------------------------------------------------------
 map("n", "<leader>bb", "<cmd>e #<cr>", "Switch to Other Buffer")
 map("n", "<leader>`", "<cmd>e #<cr>", "Switch to Other Buffer")
+map("n", "<leader>bd", ":bd<cr>", "Delete Buffer")
+map("n", "<leader>qq", ":bd<cr>", "Delete Buffer")
+
+map("n", "<leader>bn", ":bn<cr>", "Next Buffer")
+map("n", "<S-l>", ":bn<cr>", "Next Buffer")
+map("n", "]b", ":bn<cr>", "Next Buffer")
+
+map("n", "<leader>bp", ":bp<cr>", "Prev Buffer")
+map("n", "<S-h>", ":bp<cr>", "Prev Buffer")
+map("n", "[b", ":bp<cr>", "Prev Buffer")
 
 ----------------------------------------------------------------------------------
 -- Tab
@@ -78,7 +88,7 @@ map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", "Escape and clear hlsearch")
 -- Escape with jj
 map("i", "jj", "<Esc>", "Escape")
 -- quit
-map("n", "<leader>qa", "<cmd>qa<cr>", "Quit all")
+map("n", "<leader>qa", "<cmd>qa<cr>", "Quit")
 -- Move Lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", "Move down")
 map("n", "<A-k>", "<cmd>m .-2<cr>==", "Move up")

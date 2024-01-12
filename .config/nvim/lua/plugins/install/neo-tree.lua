@@ -12,8 +12,8 @@ return {
   config = function()
 
     local map = require("util").map
-    map("n", "<leader>E", ":Neotree float reveal<CR>", "NeoTree float <NeoTree>")
-    map("n", "<leader>e", ":Neotree left toggle<CR>", "NeoTree <NeoTree>")
+    map("n", "<leader>e", ":Neotree float reveal<CR>", "NeoTree float <NeoTree>")
+    map("n", "<leader>E", ":Neotree left toggle<CR>", "NeoTree <NeoTree>")
     map("n", "<leader>o", ":Neotree float git_status<CR>", "NeoTree git_status <NeoTree>")
   end,
 }

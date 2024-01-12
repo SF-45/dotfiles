@@ -108,7 +108,7 @@ local function config()
     ["<leader>u"] = { name = "+ui" },
     ["<leader>w"] = { name = "+windows" },
     ["<leader>x"] = { name = "+diagnostics/quickfix" },
-    ["<leader>t"] = { name = "+translate" },
+    ["<leader>t"] = { name = "+translate/tests" },
   })
 end
 

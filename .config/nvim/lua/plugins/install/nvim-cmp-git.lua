@@ -1,7 +1,13 @@
 --=================================================================================================
---Что-то
---https://github.com/nvim-lua/plenary.nvim
+--Расширения CMP для Git
+--https://github.com/petertriho/cmp-git
 --=================================================================================================
 return {
-  "nvim-lua/plenary.nvim",
+    {
+        "petertriho/cmp-git",
+        config = function()
+            require("cmp_git").setup {}
+        end,
+    },
 }
+
