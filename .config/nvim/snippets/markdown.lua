@@ -1,4 +1,3 @@
-local ilyasyoy_snippets = require "ilyasyoy.snippets"
 local ls = require "luasnip"
 local fmt = require("luasnip.extras.fmt").fmt
 local s = ls.snippet
@@ -9,12 +8,6 @@ local f = ls.function_node
 
 return {
     s("checkbox", fmt("- {} {}", { c(1, { t "[ ]", t "[x]" }), i(0, "Todo") })),
-    s("today", fmt("{}", ilyasyoy_snippets.current_date())),
-    s("todaylink", fmt("[[{}]]", ilyasyoy_snippets.current_date())),
-    s("tomorrow", fmt("{}", ilyasyoy_snippets.tomorrow_date())),
-    s("tomorrowlink", fmt("[[{}]]", ilyasyoy_snippets.tomorrow_date())),
-    s("yesterday", fmt("{}", ilyasyoy_snippets.yesterday_date())),
-    s("yesterdaylink", fmt("[[{}]]", ilyasyoy_snippets.yesterday_date())),
     s(
         "callout",
         fmt("> [!{}] {}\n> {}", {

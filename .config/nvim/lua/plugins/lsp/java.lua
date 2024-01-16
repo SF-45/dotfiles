@@ -1,10 +1,10 @@
 local home = os.getenv("HOME")
 local jdtls = require("jdtls")
--- local root_markers = { "gradlew", "mvnw", ".git", "pom.xml" }
-local root_markers = { "gradlew", "mvnw" }
+local root_markers = { '.git', 'mvnw', 'gradlew' }
 local root_dir = jdtls.setup.find_root(root_markers)
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local workspace_dir = home .. "/dev/java/" .. project_name
+-- local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local project_name = vim.fn.fnamemodify(root_dir, ':p:h:t')
+local data_dir = home .. "/.cache/jdtls/workspace/" .. project_name
 
 local mason_share = home .. "/.local/share/nvim/mason/share"
 
@@ -52,110 +52,111 @@ local config = {
     bundles = bundles,
   },
   root_dir = root_dir,
-  settings = {
-    java = {
-      format = {
-        settings = {
-          url = home .. "/.config/nvim/eclipse-java-google-style.xml",
-          profile = "GoogleStyle",
-        },
-      },
-      extendedClientCapabilities = jdtls.extendedClientCapabilities,
-      signatureHelp = { enabled = true },
-      contentProvider = { preferred = "fernflower" },
-      completion = {
-        favoriteStaticMembers = {
-          "org.hamcrest.MatcherAssert.assertThat",
-          "org.hamcrest.Matchers.*",
-          "org.hamcrest.CoreMatchers.*",
-          "org.junit.jupiter.api.Assertions.*",
-          "java.util.Objects.requireNonNull",
-          "java.util.Objects.requireNonNullElse",
-          "org.mockito.Mockito.*",
-        },
-        filteredTypes = {
-          "com.sun.*",
-          "io.micrometer.shaded.*",
-          "java.awt.*",
-          "jdk.*",
-          "sun.*",
-        },
-      },
-      compile = {
-        nullAnalysis = {
-          nonnull = {
-            "lombok.NonNull",
-            "javax.annotation.Nonnull",
-            "org.eclipse.jdt.annotation.NonNull",
-            "org.springframework.lang.NonNull",
-          },
-        },
-      },
-      maven = { downloadSources = true },
-      sources = {
-        organizeImports = {
-          starThreshold = 9999,
-          staticStarThreshold = 9999,
-        },
-      },
-      codeGeneration = {
-        toString = {
-          template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
-        },
-        hashCodeEquals = {
-          useJava7Objects = true,
-        },
-        useBlocks = true,
-      },
-      configuration = {
-        runtimes = {
-          {
-            name = "JavaSE-1.8",
-            path = "/usr/lib/jvm/java-8-openjdk",
-          },
-          {
-            name = "JavaSE-11",
-            path = "/usr/lib/jvm/java-11-openjdk",
-          },
-          {
-            name = "JavaSE-17",
-            path = "/usr/lib/jvm/java-17-openjdk",
-          },
-        },
+}
+
+config.cmd = {
+  "jdtls",
+  "--jvm-arg=-XX:+UseParallelGC",
+  "--jvm-arg=-XX:GCTimeRatio=4",
+  "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
+  "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
+  "--jvm-arg=-Xmx1500m",
+  "--jvm-arg=-Xms700m",
+  "--jvm-arg=-Xlog:disable",
+  "--jvm-arg=-javaagent:" .. mason_share .. "/jdtls/lombok.jar",
+  "-data", data_dir,
+}
+
+-- config.cmd = {
+--   "java",
+--   "-Declipse.application=org.eclipse.jdt.ls.core.id1",
+--   "-Dosgi.bundles.defaultStartLevel=4",
+--   "-Declipse.product=org.eclipse.jdt.ls.core.product",
+--   "-Dlog.protocol=true",
+--   "-Dlog.level=ALL",
+--   "-Xmx1g",
+--   "--add-modules=ALL-SYSTEM",
+--   "--add-opens", "java.base/java.util=ALL-UNNAMED",
+--   "--add-opens", "java.base/java.lang=ALL-UNNAMED",
+--   "-jar", mason_share .. "/jdtls/plugins/org.eclipse.equinox.launcher.jar",
+--   "-configuration", mason_share .. "/jdtls/config",
+--   "--jvm-arg=-javaagent:" .. mason_share .. "/jdtls/lombok.jar",
+--   "-data", workspace_dir
+-- }
+config.settings = {}
+config.settings.java = {
+  format = {
+    settings = {
+      url = home .. "/.config/nvim/eclipse-java-google-style.xml",
+      profile = "GoogleStyle",
+    },
+  },
+  redhat = {
+    telemetry = { enabled = false },
+  },
+  extendedClientCapabilities = jdtls.extendedClientCapabilities,
+  signatureHelp = { enabled = true },
+  contentProvider = { preferred = "fernflower" },
+  completion = {
+    favoriteStaticMembers = {
+      "org.hamcrest.MatcherAssert.assertThat",
+      "org.hamcrest.Matchers.*",
+      "org.hamcrest.CoreMatchers.*",
+      "org.junit.jupiter.api.Assertions.*",
+      "java.util.Objects.requireNonNull",
+      "java.util.Objects.requireNonNullElse",
+      "org.mockito.Mockito.*",
+    },
+    filteredTypes = {
+      "com.sun.*",
+      "io.micrometer.shaded.*",
+      "java.awt.*",
+      "jdk.*",
+      "sun.*",
+    },
+  },
+  compile = {
+    nullAnalysis = {
+      nonnull = {
+        "lombok.NonNull",
+        "javax.annotation.Nonnull",
+        "org.eclipse.jdt.annotation.NonNull",
+        "org.springframework.lang.NonNull",
       },
     },
   },
-  --cmd = { "jdtls", workspace_folder },
-  -- cmd = {
-  --   "jdtls",
-  --   "-data",
-  --   workspace_dir,
-  --   "--jvm-arg=-XX:+UseParallelGC",
-  --   "--jvm-arg=-XX:GCTimeRatio=4",
-  --   "--jvm-arg=-XX:AdaptiveSizePolicyWeight=90",
-  --   "--jvm-arg=-Dsun.zip.disableMemoryMapping=true",
-  --   "--jvm-arg=-Xmx1500m",
-  --   "--jvm-arg=-Xms700m",
-  --   "--jvm-arg=-Xlog:disable",
-  --   "--jvm-arg=-javaagent:"
-  --   .. get_install_path_for "jdtls"
-  --   .. "/lombok.jar",
-  -- },
-  cmd = {
-    "jdtls",
-    "-Declipse.application=org.eclipse.jdt.ls.core.id1",
-    "-Dosgi.bundles.defaultStartLevel=4",
-    "-Declipse.product=org.eclipse.jdt.ls.core.product",
-    "-Dlog.protocol=true",
-    "-Dlog.level=ALL",
-    "-Xmx1g",
-    "--add-modules=ALL-SYSTEM",
-    "--add-opens", "java.base/java.util=ALL-UNNAMED",
-    "--add-opens", "java.base/java.lang=ALL-UNNAMED",
-    "-jar", mason_share .. "/jdtls/plugins/org.eclipse.equinox.launcher.jar",
-    "-configuration", mason_share .. "/jdtls/config",
-    "--jvm-arg=-javaagent:" .. mason_share .. "/jdtls/lombok.jar",
-    "-data", workspace_dir
+  maven = { downloadSources = true },
+  eclipse = { downloadSources = true },
+  sources = {
+    organizeImports = {
+      starThreshold = 9999,
+      staticStarThreshold = 9999,
+    },
+  },
+  codeGeneration = {
+    toString = {
+      template = "${object.className}{${member.name()}=${member.value}, ${otherMembers}}",
+    },
+    hashCodeEquals = {
+      useJava7Objects = true,
+    },
+    useBlocks = true,
+  },
+  configuration = {
+    runtimes = {
+      {
+        name = "JavaSE-1.8",
+        path = "/usr/lib/jvm/java-8-openjdk",
+      },
+      {
+        name = "JavaSE-11",
+        path = "/usr/lib/jvm/java-11-openjdk",
+      },
+      {
+        name = "JavaSE-17",
+        path = "/usr/lib/jvm/java-17-openjdk",
+      },
+    },
   },
 }
 

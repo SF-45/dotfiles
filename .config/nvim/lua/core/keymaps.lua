@@ -79,6 +79,9 @@ map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "Up", optsExt)
 -- bettor indenting
 map("v", "<", "<gv")
 map("v", ">", ">gv")
+-- faster scroll
+map({"n", "x"}, "<C-e>", "2<C-e>", "Scroll down", {noremap = true, silent = true})
+map({"n", "x"}, "<C-y>", "2<C-y>", "Scroll up", {noremap = true, silent = true})
 
 ----------------------------------------------------------------------------------
 -- Misc
