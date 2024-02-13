@@ -1,7 +1,10 @@
 --=================================================================================================
---Наборы сниппетов
---https://github.com/rafamadriz/friendly-snippets
+-- Скорость набора
+-- https://github.com/NStefan002/speedtyper.nvim
 --=================================================================================================
 return {
-  "rafamadriz/friendly-snippets",
+  "NStefan002/speedtyper.nvim",
+  lazy = true,
+  cmd = "Speedtyper",
+  opts = {},
 }

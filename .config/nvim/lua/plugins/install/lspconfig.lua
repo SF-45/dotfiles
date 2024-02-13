@@ -47,6 +47,14 @@ local function setup_lua()
   })
 end
 
+local function setup_lemmix()
+  local lspconfig = require("lspconfig")
+  lspconfig.lemminx.setup({
+    capabilities = get_capabilities(),
+    filetypes = {"xml", "xsd", "xsl", "xslt", "svg", "fxml"}
+  })
+end
+
 return {
   "neovim/nvim-lspconfig",
   dependencies = {
@@ -58,5 +66,6 @@ return {
   config = function()
     setup_generic()
     setup_lua()
+    setup_lemmix()
   end,
 }

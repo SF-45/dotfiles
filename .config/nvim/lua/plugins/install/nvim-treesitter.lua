@@ -61,7 +61,7 @@ return {
         highlight = {
           enable = true,
           disable = function(lang, buf)
-            local max_filesize = 100 * 1024             -- 100 KB
+            local max_filesize = 100 * 1024 -- 100 KB
             local ok, stats = pcall(
               vim.loop.fs_stat,
               vim.api.nvim_buf_get_name(buf)
@@ -115,7 +115,14 @@ return {
                 query = "@assignment.rhs",
                 desc = "Select right hand side of an assignment <Telescope>",
               },
-
+              ["an"] = {
+                query = "@block.outer",
+                desc = "Select inner part of a block <Telescope>",
+              },
+              ["in"] = {
+                query = "@block.inner",
+                desc = "Select outer part of a block <Telescope>",
+              },
               ["aa"] = {
                 query = "@parameter.outer",
                 desc = "Select outer part of a parameter/argument <Telescope>",
@@ -160,7 +167,6 @@ return {
                 query = "@function.inner",
                 desc = "Select inner part of a method/function definition <Telescope>",
               },
-
               ["ac"] = {
                 query = "@class.outer",
                 desc = "Select outer part of a class <Telescope>",
@@ -168,15 +174,6 @@ return {
               ["ic"] = {
                 query = "@class.inner",
                 desc = "Select inner part of a class <Telescope>",
-              },
-
-              ["an"] = {
-                query = "@block.outer",
-                desc = "Select inner part of a block <Telescope>",
-              },
-              ["in"] = {
-                query = "@block.inner",
-                desc = "Select outer part of a block <Telescope>",
               },
             },
           },

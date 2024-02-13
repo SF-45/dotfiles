@@ -4,6 +4,15 @@
 --=================================================================================================
 local function config()
   local telescope = require("telescope")
+  local telescope_actions = require("telescope.actions")
+  local actions_state = require("telescope.actions.state")
+
+  local actions = {}
+
+  actions.xdg_open = function(promt_bufnr)
+    local entry = actions_state.get_selected_entry()
+    os.execute("xdg-open " .. entry.path .. " & disown")
+  end
   telescope.setup({
     defaults = {
       path_display = { "smart" },
@@ -15,11 +24,9 @@ local function config()
       dynamic_preview_title = true,
       mappings = {
         n = {
-          ["<c-d>"] = require("telescope.actions").delete_buffer,
           ["q"] = require("telescope.actions").close,
         },
         i = {
-          ["<c-d>"] = require("telescope.actions").delete_buffer,
           ["<c-q>"] = require("telescope.actions").close,
         },
       },
@@ -29,6 +36,31 @@ local function config()
         hidden = true,
         opts = {
           "--smart-case",
+        },
+        mappings = {
+          n = {
+            ["<c-o>"] = {
+              actions.xdg_open,
+              type = "action"
+            }
+          },
+          i = {
+            ["<c-o>"] = {
+              actions.xdg_open,
+              type = "action"
+            }
+          }
+        }
+      },
+      buffers = {
+        sort_lastused = true,
+        mappings = {
+          n = {
+            ["<c-d>"] = require("telescope.actions").delete_buffer,
+          },
+          i = {
+            ["<c-d>"] = require("telescope.actions").delete_buffer,
+          }
         },
       },
       live_grep = {
@@ -56,6 +88,7 @@ local function config()
   telescope.load_extension("fzf")
   telescope.load_extension("ui-select")
   telescope.load_extension("dap")
+  telescope.load_extension('projects')
 end
 
 return {
@@ -72,8 +105,9 @@ return {
   config = function()
     config()
     local map = require("util").map
+    local autocmd = require("util").register_autocmd
     local builtin = require('telescope.builtin')
-    local themes = require "telescope.themes"
+    local themes = require("telescope.themes")
 
     map("n", "<leader>ff", builtin.find_files, "Find file <Telescope>")
     map("n", "<leader>fg", builtin.live_grep, "Grep <Telescope>")
@@ -88,6 +122,7 @@ return {
     map("n", "<leader>fm", builtin.man_pages, "Find man pages <Telescope>")
     map("n", "<leader>fC", builtin.commands, "Find commands <Telescope>")
     map("n", "<leader>fk", builtin.keymaps, "Find keymaps <Telescope>")
+    map("n", "z=", function() builtin.spell_suggest(themes.get_ivy()) end, "Find spell suggest <Telescope>", { noremap = true })
 
     map("n", "<leader>fF", builtin.git_files, "Find git file <Telescope>")
     map("n", "<leader>fGb", builtin.git_branches, "Find git branches <Telescope>")
@@ -95,7 +130,7 @@ return {
     map("n", "<leader>fGf", builtin.git_files, "Find git files <Telescope>")
 
 
-    require("util").register_autocmd("LspAttach", {
+    autocmd("LspAttach", {
       group = "telescope_lsp_keymap",
       callback = function(event)
         local opts = { buffer = event.buf }

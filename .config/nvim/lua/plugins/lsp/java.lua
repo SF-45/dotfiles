@@ -19,6 +19,11 @@ local on_attach = function(_, bufnr)
   map("n", "<leader>cev", jdtls.extract_variable, "Extract variable <Java>", opts)
   map("n", "<leader>cec", jdtls.extract_constant, "Extract constant <Java>", opts)
   map("v", "<leader>cem", function() jdtls.extract_method({ true }) end, "Extract method <Java>", opts)
+  map({ "i", "x", "n", "s" }, "<C-s>", function()
+    vim.lsp.buf.format({ async = true })
+    require("jdtls").organize_imports()
+    vim.cmd("w")
+  end, "Organize code and save file <Java>", opts)
 
   if (project_name == "owlook-project") then
     map("n", "<leader>cRr", ":!./owlook.sh<CR>", "Run Owlook App <Owlook>", opts)

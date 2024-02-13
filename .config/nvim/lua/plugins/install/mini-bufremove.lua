@@ -18,14 +18,15 @@ local function buf_delete()
 end
 return {
   "echasnovski/mini.bufremove",
+  lazy = true,
+  keys = {
+    {"<leader>bd", buf_delete, desc = "Delete Buffer <BufRemove>"},
+    {"<leader>qq", buf_delete, desc = "Delete Buffer <BufRemove>"},
+  },
   config = function()
     require("mini.bufremove").setup()
     local map = require("util").map
-    map("n", "<leader>bd", buf_delete, "Delete Buffer <BufRemove>")
-    map("n", "<leader>qq", buf_delete, "Delete Buffer <BufRemove>")
-
-    map("n", "<leader>bD", function()
-      require("mini.bufremove").delete(0, true)
-    end, "Delete Buffer (Force) <BufRemove>")
+    -- map("n", "<leader>bd", buf_delete, "Delete Buffer <BufRemove>")
+    -- map("n", "<leader>qq", buf_delete, "Delete Buffer <BufRemove>")
   end,
 }

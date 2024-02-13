@@ -17,6 +17,7 @@ local copyTable = require("util").copyTable
 
 -- highlights under cursor
 map("n", "<leader>ui", vim.show_pos, "Inspect Pos")
+map("n", "<leader>ut", ":!$TERM & disown<CR>", "Open alacritty")
 
 ----------------------------------------------------------------------------------
 -- Window
@@ -57,6 +58,16 @@ map("n", "<leader>bp", ":bp<cr>", "Prev Buffer")
 map("n", "<S-h>", ":bp<cr>", "Prev Buffer")
 map("n", "[b", ":bp<cr>", "Prev Buffer")
 
+map("n", "<leader>bD", function()
+  local bufs = vim.api.nvim_list_bufs()
+  local current_buf = vim.api.nvim_get_current_buf()
+  for _, i in ipairs(bufs) do
+    if i ~= current_buf then
+      vim.api.nvim_buf_delete(i, {})
+    end
+  end
+end, "Delete Other Buffers")
+
 ----------------------------------------------------------------------------------
 -- Tab
 ----------------------------------------------------------------------------------
@@ -80,8 +91,8 @@ map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", "Up", optsExt)
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 -- faster scroll
-map({"n", "x"}, "<C-e>", "2<C-e>", "Scroll down", {noremap = true, silent = true})
-map({"n", "x"}, "<C-y>", "2<C-y>", "Scroll up", {noremap = true, silent = true})
+map({ "n", "x" }, "<C-e>", "2<C-e>", "Scroll down", { noremap = true, silent = true })
+map({ "n", "x" }, "<C-y>", "2<C-y>", "Scroll up", { noremap = true, silent = true })
 
 ----------------------------------------------------------------------------------
 -- Misc

@@ -17,6 +17,8 @@ alias mount.sf 'sudo mount --mkdir -o uid=sf,gid=users,fmask=113,dmask=002'
 alias pacman.update 'sudo pacman -Syu'
 alias polybar.restart '~/.config/polybar/restart.sh'
 alias r ranger
+alias n nvim
+alias t '$TERM & disown'
 alias refloginconf 'systemctl kill -s HUP systemd-logind'
 alias sudos 'sudo -E'
 alias suspend.disable 'systemctl mask --runtime suspend.target'

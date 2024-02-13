@@ -27,6 +27,18 @@ autocmd("FileType", {
 	end,
 })
 
+autocmd("FileType", {
+  group = "spellwrapon",
+  pattern = {
+    "gitcommit",
+    "markdown",
+  },
+  callback = function ()
+     vim.opt_local.spell = true
+     vim.opt_local.wrap = true
+  end
+})
+
 autocmd("LspAttach", {
   group = "default_lsp_attach",
   callback = function(event)

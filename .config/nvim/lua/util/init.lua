@@ -11,7 +11,7 @@ M.map = function(mode, rhs, lhs, desc, opts)
 end
 
 function M.augroup(name)
-	return vim.api.nvim_create_augroup("SF-45_" .. name, { clear = true })
+	return vim.api.nvim_create_augroup("SF-45_" .. name, { clear = false })
 end
 function M.copyTable(orig)
 	local copy

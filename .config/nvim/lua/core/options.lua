@@ -27,6 +27,8 @@ opt.cursorline = true -- Enable highlighting of the current line
 opt.number = true -- Print line number
 opt.relativenumber = true -- Относительная нумерация строк
 opt.wrap = false -- Визуальный перенос строк
+opt.linebreak = true -- Если визуальный перенос строк включить, будет переносить по словам
+opt.showbreak = [[↪ ]]
 opt.scrolloff = 8 -- Сколько строк должно быть видно над и под курсором при скролле
 opt.sidescrolloff = 8 -- Сколько строк должно быть видно слева и справа от курсора при скролле
 
