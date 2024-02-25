@@ -103,6 +103,10 @@ map({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", "Escape and clear hlsearch")
 map("i", "jj", "<Esc>", "Escape")
 -- quit
 map("n", "<leader>qa", "<cmd>qa<cr>", "Quit")
+-- quit and save all
+map("n", "<leader>qA", "<cmd>xa<cr>", "Quit And Save All")
+-- discard changes
+map("n", "<leader>qe", "<cmd>e!<cr>", "Discard changes")
 -- Move Lines
 map("n", "<A-j>", "<cmd>m .+1<cr>==", "Move down")
 map("n", "<A-k>", "<cmd>m .-2<cr>==", "Move up")
@@ -112,6 +116,7 @@ map("v", "<A-j>", ":m '>+1<cr>gv=gv", "Move down")
 map("v", "<A-k>", ":m '<-2<cr>gv=gv", "Move up")
 -- save file
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", "Save file")
+map("n", "<leader>qw", ":wa<CR>", "Save All")
 -- Quickfix
 map("n", "<leader>xl", "<cmd>lopen<cr>", "Location List")
 map("n", "<leader>xq", "<cmd>copen<cr>", "Quickfix List")

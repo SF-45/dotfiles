@@ -9,8 +9,8 @@ return {
   },
   lazy = true,
   keys = {
-    "<leader>Du",
-    "<leader>DU",
+    {"<leader>Du", desc = "Toggle Simple Debug ui <DAP UI"},
+    {"<leader>DU", desc = "Toggle Full Debug ui <DAP UI"},
   },
   config = function()
     local dapui = require "dapui"
@@ -20,7 +20,7 @@ return {
 
     map("n", "<leader>Du", function()
       dapui.toggle { layout = 2 }
-    end, "Toggle Simple Debug ui, I mainly use it to run tests <DAP UI>")
+    end, "Toggle Simple Debug ui <DAP UI>")
 
     map("n", "<leader>DU", dapui.toggle, "Toggle Full Debug ui <DAP UI>")
   end,

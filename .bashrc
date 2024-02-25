@@ -8,6 +8,7 @@
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 export GPG_TTY=$(tty)
+export MANPAGER="nvim +Man!"
 PS1='[\u@\h \W]\$ '
 if [[ -z ${BASH_EXECUTION_STRING} ]]
 then

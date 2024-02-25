@@ -57,7 +57,17 @@ return {
       -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
       use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
       -- instead of relying on nvim autocmd events.
-      commands = {}                   -- Add a custom command or override a global one using the same function name
+      commands = {
+        xdg_open = function(state)
+          local node = state.tree:get_node()
+          os.execute("xdg-open " .. node.path .. " & disown")
+        end
+      }, -- Add a custom command or override a global one using the same function name
+      window = {
+        mappings = {
+          ["<C-o>"] = "xdg_open"
+        }
+      },
 
     }
     neo_conf.document_symbols = {
@@ -149,8 +159,7 @@ return {
     map("n", "<leader>e", ":Neotree float reveal<CR>", "NeoTree float <NeoTree>")
     map("n", "<leader>E", ":Neotree left toggle<CR>", "NeoTree <NeoTree>")
     map("n", "<leader>o", ":Neotree float git_status<CR>", "NeoTree git_status <NeoTree>")
-    map("n", "<leader>s", ":Neotree right toggle reveal source=document_symbols<CR>", "NeoTree Document Symbols <NeoTree>")
-
-
+    map("n", "<leader>s", ":Neotree right toggle reveal source=document_symbols<CR>",
+      "NeoTree Document Symbols <NeoTree>")
   end,
 }

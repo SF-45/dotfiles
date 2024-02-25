@@ -28,6 +28,10 @@ end
 
 return {
   "potamides/pantran.nvim",
+  lazy = true,
+  keys = {
+    {"<leader>tr", desc = "Translate <Pantran>", mode = {"n", "x"}}
+  },
   config = function()
     config()
     local map = require("util").map

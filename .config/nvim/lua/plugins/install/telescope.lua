@@ -4,7 +4,6 @@
 --=================================================================================================
 local function config()
   local telescope = require("telescope")
-  local telescope_actions = require("telescope.actions")
   local actions_state = require("telescope.actions.state")
 
   local actions = {}
@@ -13,78 +12,85 @@ local function config()
     local entry = actions_state.get_selected_entry()
     os.execute("xdg-open " .. entry.path .. " & disown")
   end
-  telescope.setup({
-    defaults = {
-      path_display = { "smart" },
-      file_ignore_patterns = {
-        "node_modules",
-        ".git/",
-        "target/"
+
+  local config = {}
+  config.defaults = {
+    path_display = { "smart" },
+    file_ignore_patterns = {
+      "node_modules",
+      ".git/",
+      "target/"
+    },
+    dynamic_preview_title = true,
+    mappings = {
+      n = {
+        ["q"] = require("telescope.actions").close,
       },
-      dynamic_preview_title = true,
-      mappings = {
-        n = {
-          ["q"] = require("telescope.actions").close,
-        },
-        i = {
-          ["<c-q>"] = require("telescope.actions").close,
-        },
+      i = {
+        ["<c-q>"] = require("telescope.actions").close,
       },
     },
-    pickers = {
-      find_files = {
-        hidden = true,
-        opts = {
-          "--smart-case",
-        },
-        mappings = {
-          n = {
-            ["<c-o>"] = {
-              actions.xdg_open,
-              type = "action"
-            }
-          },
-          i = {
-            ["<c-o>"] = {
-              actions.xdg_open,
-              type = "action"
-            }
-          }
+  }
+
+  config.pickers = {}
+  config.pickers.find_files = {
+    hidden = true,
+    no_ignore = false,
+    opts = {
+      "--smart-case",
+    },
+    mappings = {
+      n = {
+        ["<c-o>"] = {
+          actions.xdg_open,
+          type = "action"
         }
       },
-      buffers = {
-        sort_lastused = true,
-        mappings = {
-          n = {
-            ["<c-d>"] = require("telescope.actions").delete_buffer,
-          },
-          i = {
-            ["<c-d>"] = require("telescope.actions").delete_buffer,
-          }
-        },
+      i = {
+        ["<c-o>"] = {
+          actions.xdg_open,
+          type = "action"
+        }
+      }
+    }
+  }
+
+  config.pickers.buffers = {
+    sort_lastused = true,
+    mappings = {
+      n = {
+        ["<c-d>"] = require("telescope.actions").delete_buffer,
       },
-      live_grep = {
-        additional_args = function(opts)
-          return {
-            "--hidden",
-            "--smart-case",
-          }
-        end,
-      },
+      i = {
+        ["<c-d>"] = require("telescope.actions").delete_buffer,
+      }
     },
-    extensions = {
-      fzf = {
-        fuzzy = true,                   -- false will only do exact matching
-        override_generic_sorter = true, -- override the generic sorter
-        override_file_sorter = true,    -- override the file sorter
-        case_mode = "smart_case",       -- or "ignore_case" or "respect_case"
-        -- the default case_mode is "smart_case"
-      },
-      ["ui-select"] = {
-        require("telescope.themes").get_ivy {},
-      },
+
+  }
+
+  config.pickers.live_grep = {
+    additional_args = function(opts)
+      return {
+        "--hidden",
+        "--smart-case",
+      }
+    end,
+  }
+
+  config.extensions = {
+    fzf = {
+      fuzzy = true,                     -- false will only do exact matching
+      override_generic_sorter = true,   -- override the generic sorter
+      override_file_sorter = true,      -- override the file sorter
+      case_mode = "smart_case",         -- or "ignore_case" or "respect_case"
+      -- the default case_mode is "smart_case"
     },
-  })
+    ["ui-select"] = {
+      require("telescope.themes").get_ivy {},
+    },
+  }
+
+  telescope.setup(config)
   telescope.load_extension("fzf")
   telescope.load_extension("ui-select")
   telescope.load_extension("dap")
@@ -122,7 +128,9 @@ return {
     map("n", "<leader>fm", builtin.man_pages, "Find man pages <Telescope>")
     map("n", "<leader>fC", builtin.commands, "Find commands <Telescope>")
     map("n", "<leader>fk", builtin.keymaps, "Find keymaps <Telescope>")
-    map("n", "z=", function() builtin.spell_suggest(themes.get_ivy()) end, "Find spell suggest <Telescope>", { noremap = true })
+    map("n", "<leader>fy", function() builtin.filetypes(themes.get_ivy()) end, "Find filetypes <Telescope>")
+    map("n", "z=", function() builtin.spell_suggest(themes.get_ivy()) end, "Find spell suggest <Telescope>",
+      { noremap = true })
 
     map("n", "<leader>fF", builtin.git_files, "Find git file <Telescope>")
     map("n", "<leader>fGb", builtin.git_branches, "Find git branches <Telescope>")
@@ -140,8 +148,9 @@ return {
         map("n", "<leader>fo", builtin.lsp_incoming_calls, "Find incoming calls (LSP) <Telescope>", opts)
         map("n", "<leader>fO", builtin.lsp_outgoing_calls, "Find outgoing calls (LSP) <Telescope>", opts)
         map("n", "<leader>fi", builtin.lsp_implementations, "Find implementations (LSP) <Telescope>", opts)
-        map("n", "<leader>fx", function() builtin.diagnostics({ bufnr = 0 }) end, "Find errors (LSP) <Telescope>", opts)
-        map("n", "<leader>fX", builtin.diagnostics, "Find errors all (LSP) <Telescope>", opts)
+        map("n", "<leader>fx", function() builtin.diagnostics({ bufnr = 0 }) end, "Find diagnostics (LSP) <Telescope>", opts)
+        map("n", "<leader>fX", builtin.diagnostics, "Find diagnostics all (LSP) <Telescope>", opts)
+        map("n", "<leader>fe", function() builtin.diagnostics({ severity_limit = "ERROR" }) end, "Find errors (LSP) <Telescope>", opts)
       end,
     })
   end,

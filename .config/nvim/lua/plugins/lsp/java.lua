@@ -22,11 +22,14 @@ local on_attach = function(_, bufnr)
   map({ "i", "x", "n", "s" }, "<C-s>", function()
     vim.lsp.buf.format({ async = true })
     require("jdtls").organize_imports()
+    os.execute("sleep 0.2")
     vim.cmd("w")
   end, "Organize code and save file <Java>", opts)
 
   if (project_name == "owlook-project") then
-    map("n", "<leader>cRr", ":!./owlook.sh<CR>", "Run Owlook App <Owlook>", opts)
+    map("n", "<leader>cRr", ":terminal ./run.sh<CR>", "Run Owlook <Owlook>", opts)
+    map("n", "<leader>cRR", ":terminal ./build_run.sh<CR>", "Build and Run Owlook <Owlook>", opts)
+    map("n", "<leader>cRb", ":terminal ./build.sh<CR>", "Build Owlook App <Owlook>", opts)
   end
 
   vim.cmd [[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>) ]]
