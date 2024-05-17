@@ -77,6 +77,9 @@ local function config()
     end,
   }
 
+  -- config.pickers.lsp_document_symbols = {
+  --   layout_strategy = "bottom_pane",
+  -- }
   config.extensions = {
     fzf = {
       fuzzy = true,                     -- false will only do exact matching

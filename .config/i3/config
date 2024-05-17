@@ -32,24 +32,6 @@ for_window [all] title_window_icon yes
 focus_on_window_activation focus
 
 #======================================================================================================
-# Save Layout Load
-#======================================================================================================
-
-# Для сохранения текущего расположения окон
-# i3-save-tree --workspace 1 > ~/.i3/workspace-1.json
-
-#exec --no-startup-id i3-msg "workspace 1; append_layout ~/.config/i3/save-layout/workspace-1.json"
-#exec --no-startup-id i3-msg "workspace 2; append_layout ~/.config/i3/save-layout/workspace-2.json"
-#exec --no-startup-id i3-msg "workspace 3; append_layout ~/.config/i3/save-layout/workspace-3.json"
-#exec --no-startup-id i3-msg "workspace 4; append_layout ~/.config/i3/save-layout/workspace-4.json"
-#exec --no-startup-id i3-msg "workspace 5; append_layout ~/.config/i3/save-layout/workspace-5.json"
-#exec --no-startup-id i3-msg "workspace 6; append_layout ~/.config/i3/save-layout/workspace-6.json"
-exec --no-startup-id i3-msg "workspace 7; append_layout ~/.config/i3/save-layout/workspace-7.json"
-exec --no-startup-id i3-msg "workspace 8; append_layout ~/.config/i3/save-layout/workspace-8.json"
-#exec --no-startup-id i3-msg "workspace 9; append_layout ~/.config/i3/save-layout/workspace-9.json"
-#exec --no-startup-id i3-msg "workspace 10; append_layout ~/.config/i3/save-layout/workspace-10.json"
-
-#======================================================================================================
 # Float windows
 #======================================================================================================
 # Используем xprop для опреления свойств X11 окна
@@ -68,12 +50,29 @@ for_window [class="Pavucontrol"] floating enable
 exec --no-startup-id xset s 0 0
 exec --no-startup-id xset dpms 0 0 0
 
-#exec --no-startup-id xautolock -time 5 -locker "$LOCKER" -detectsleep -corners ----
 exec --no-startup-id xss-lock -- $LOCKER
 
 exec --no-startup-id autorandr -c --default default
-#exec --no-startup-id feh --bg-scale $HOME/wallpapers/wp.png
 exec --no-startup-id "sh -c 'sleep 5; exec feh --bg-scale ~/.config/i3/wp.*'"
+
+#======================================================================================================
+# Save Layout Load
+#======================================================================================================
+
+# Для сохранения текущего расположения окон
+# i3-save-tree --workspace 1 > ~/.i3/workspace-1.json
+
+#exec --no-startup-id i3-msg "workspace 1; append_layout ~/.config/i3/save-layout/workspace-1.json"
+#exec --no-startup-id i3-msg "workspace 2; append_layout ~/.config/i3/save-layout/workspace-2.json"
+#exec --no-startup-id i3-msg "workspace 3; append_layout ~/.config/i3/save-layout/workspace-3.json"
+#exec --no-startup-id i3-msg "workspace 4; append_layout ~/.config/i3/save-layout/workspace-4.json"
+#exec --no-startup-id i3-msg "workspace 5; append_layout ~/.config/i3/save-layout/workspace-5.json"
+#exec --no-startup-id i3-msg "workspace 6; append_layout ~/.config/i3/save-layout/workspace-6.json"
+exec --no-startup-id i3-msg "workspace 7; append_layout ~/.config/i3/save-layout/workspace-7.json"
+exec --no-startup-id i3-msg "workspace 8; append_layout ~/.config/i3/save-layout/workspace-8.json"
+#exec --no-startup-id i3-msg "workspace 9; append_layout ~/.config/i3/save-layout/workspace-9.json"
+#exec --no-startup-id i3-msg "workspace 10; append_layout ~/.config/i3/save-layout/workspace-10.json"
+
 #======================================================================================================
 # Autostart
 #======================================================================================================

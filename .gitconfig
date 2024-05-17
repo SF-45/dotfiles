@@ -1,7 +1,8 @@
 [user]
+
 	name = SF-45
 	email = akcaynt1@gmail.com
-  signingkey = 0x4BA515DF3D0FCCD9
+  signingkey = 0x1090C18E415D55FC
 [core]
 	editor = nvim
 [commit]
