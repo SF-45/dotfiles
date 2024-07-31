@@ -52,7 +52,7 @@ autocmd("LspAttach", {
     map("n", "gd", vim.lsp.buf.definition, "Goto Definition <LSP>", opts)
     map("n", "K", vim.lsp.buf.hover, "Hover <LSP>", opts)
     map("n", "gi", vim.lsp.buf.implementation, "Goto Implementation <LSP>", opts)
-    map("n", "<C-k>", vim.lsp.buf.signature_help, "", opts)
+    map("n", "<leader>ch", vim.lsp.buf.signature_help, "Signature Help <LSP>", opts)
     -- map("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
     -- map("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
     -- map("n", "<space>wl", function()

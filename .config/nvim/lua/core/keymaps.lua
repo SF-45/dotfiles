@@ -36,6 +36,7 @@ map("n", "<C-j>", "<C-w>j", "Go to lower window", opts)
 map("n", "<C-k>", "<C-w>k", "Go to upper window", opts)
 map("n", "<C-l>", "<C-w>l", "Go to right window", opts)
 
+
 -- Resize window using <ctrl> arrow keys
 map("n", "<C-Up>", "<cmd>resize +2<cr>", "Increase window height")
 map("n", "<C-Down>", "<cmd>resize -2<cr>", "Decrease window height")

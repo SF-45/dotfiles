@@ -8,5 +8,7 @@
 !.xinitrc
 !.xprofile
 !.Xresources
+!pacman-explicit-packages
+!pacman-aur-packages
 
 !.config/

@@ -26,11 +26,9 @@ local on_attach = function(_, bufnr)
     vim.cmd("w")
   end, "Organize code and save file <Java>", opts)
 
-  if (project_name == "owlook-project") then
-    map("n", "<leader>cRr", ":terminal ./run.sh<CR>", "Run Owlook <Owlook>", opts)
-    map("n", "<leader>cRR", ":terminal ./build_run.sh<CR>", "Build and Run Owlook <Owlook>", opts)
-    map("n", "<leader>cRb", ":terminal ./build.sh<CR>", "Build Owlook App <Owlook>", opts)
-  end
+  map("n", "<leader>cRr", ":terminal ./run.sh<CR>", "Run project <Java>", opts)
+  map("n", "<leader>cRR", ":terminal ./build_run.sh<CR>", "Build and Run project <Java>", opts)
+  map("n", "<leader>cRb", ":terminal ./build.sh<CR>", "Build project <Java>", opts)
 
   vim.cmd [[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_compile JdtCompile lua require('jdtls').compile(<f-args>) ]]
   vim.cmd [[ command! -buffer -nargs=? -complete=custom,v:lua.require'jdtls'._complete_set_runtime JdtSetRuntime lua require('jdtls').set_runtime(<f-args>) ]]
