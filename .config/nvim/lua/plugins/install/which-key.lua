@@ -110,6 +110,9 @@ local function config()
     ["<leader>w"] = { name = "+windows" },
     ["<leader>x"] = { name = "+diagnostics/quickfix" },
     ["<leader>t"] = { name = "+translate" },
+    ["<leader>m"] = { name = "+move" },
+    ["<leader>g"] = { name = "+goto" },
+    ["<leader>gd"] = { name = "diff" },
   })
 end
 

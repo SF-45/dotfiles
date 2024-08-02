@@ -66,11 +66,11 @@ local function config()
 
   -- Set configuration for specific filetype.
   cmp.setup.filetype("gitcommit", {
-    sources = cmp.config.sources({
-      { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-    }, {
-      { name = "buffer" },
-    }),
+    sources = cmp.config.sources(
+    { { name = "git" }, }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+    { { name = "buffer" }, },
+    { { name = "conventionalcommits" }, }
+    ),
   })
 
   -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

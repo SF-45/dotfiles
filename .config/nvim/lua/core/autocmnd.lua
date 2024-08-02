@@ -1,4 +1,3 @@
--- close some filetypes with <q>
 local autocmd = require("util").register_autocmd
 local map = require("util").map
 
